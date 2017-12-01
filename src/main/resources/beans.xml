@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
+	  xmlns:context = "http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+	
+<!-- 	如果要启用注解，加入上下文的约束，下面这一行将启用注解 -->
+	<context:annotation-config></context:annotation-config>
 <!--	书写bean
 	id:为bean作一个唯一标记
 	class：表名这个bean所代表的类
@@ -30,4 +36,58 @@
 		</constructor-arg>
 		<constructor-arg name="name" value="张学友"></constructor-arg>
 	</bean>
+	
+	<bean id="textEditor" class="com.bdqn.bean.TextEditor">
+<!-- 		通过ref去引用其它的bean -->
+		<property name="spellCheker" ref="spellChecker"></property>
+	</bean>
+	<bean id="spellChecker" class="com.bdqn.bean.SpellChecker">
+	</bean>
+	
+	<bean id="myCollection" class="com.bdqn.bean.MyCollection">
+		<property name="addressList" >
+			<list>
+				<value>东莞</value>
+				<value>广州</value>
+				<value>深圳</value>
+				<value>虎门</value>
+			</list>
+		</property>
+		
+		<property name="girls">
+			<set >
+<!-- 				 可以通过rel标签对其它的bean进行引用 -->
+				 <ref bean="girl"/>
+				 <ref bean="prettyGirl"/>
+			</set>
+		</property>
+		<property name="maps">
+			<map>
+				<entry key="CN" value="中国">
+				</entry>
+				<entry key="EN" value="美国">
+				</entry>
+			</map>
+		</property>
+		
+		<property name="properties">
+			<props>
+				<prop key="ab" >杨颖</prop>
+				<prop key="james">詹姆斯</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="empty" class="com.bdqn.bean.EmptyOrNull">
+<!-- 		注入空字符串 -->
+		<property name="name" value=""></property>
+	</bean>
+	<bean id="empty2" class="com.bdqn.bean.EmptyOrNull">
+		<property name="name">
+<!-- 			通过null标签注入null值 -->
+			<null></null>
+		</property>
+	</bean>
+	
+	
 </beans>
