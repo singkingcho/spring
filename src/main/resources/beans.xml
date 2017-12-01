@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--	书写bean
+	id:为bean作一个唯一标记
+	class：表名这个bean所代表的类
+		内部配置这个bean的属性
+		属性对应的名称和值，这个bean一旦配置好，就可以由容器来帮忙创建对象
+	 init-method：初始化的时候就会执行
+	-->
+	<bean id="helloWorld" class="com.bdqn.bean.HelloWorld" init-method="init" destroy-method="destroy"
+		  >
+		<property name="msg" value="你的头发还好吗" ></property>
+	</bean>
+	
+	<bean id="girl" class="com.bdqn.bean.Girl">
+		<property name="age" value="18"></property>
+		<property name="name" value="朱茵"></property>
+	</bean>
+<!-- 	parent:通过这个属性可以描述它和另外的bean之间的关系， -->
+	<bean id="prettyGirl" class="com.bdqn.bean.PrettyGirl" parent="girl">
+		<property name="love" value="88"></property>
+	</bean>
+	
+	<bean id="boy" class="com.bdqn.bean.Boy">
+<!-- 		构造注入  指定名称和值就可了。 -->
+		<constructor-arg name="age" value="22">
+		</constructor-arg>
+		<constructor-arg name="name" value="张学友"></constructor-arg>
+	</bean>
+</beans>
