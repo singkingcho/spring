@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:c="http://www.springframework.org/schema/c"
+	     xmlns:aop="http://www.springframework.org/schema/aop"  
 	  xmlns:context = "http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	 http://www.springframework.org/schema/beans/spring-beans.xsd
 	 http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context.xsd">
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 	
 <!-- 	如果要启用注解，加入上下文的约束，下面这一行将启用注解 -->
 	<context:annotation-config></context:annotation-config>
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
 <!--	书写bean
 	id:为bean作一个唯一标记
-	class：表名这个bean所代表的类
+	class：表名这个bean所代表的类 
 		内部配置这个bean的属性
 		属性对应的名称和值，这个bean一旦配置好，就可以由容器来帮忙创建对象
 	 init-method：初始化的时候就会执行
@@ -39,7 +44,7 @@
 	
 	<bean id="textEditor" class="com.bdqn.bean.TextEditor">
 <!-- 		通过ref去引用其它的bean -->
-		<property name="spellCheker" ref="spellChecker"></property>
+<!-- 		<property name="spellCheker" ref="spellChecker"></property> -->
 	</bean>
 	<bean id="spellChecker" class="com.bdqn.bean.SpellChecker">
 	</bean>
@@ -82,12 +87,39 @@
 <!-- 		注入空字符串 -->
 		<property name="name" value=""></property>
 	</bean>
-	<bean id="empty2" class="com.bdqn.bean.EmptyOrNull">
+	<bean id="empty2" class="com.bdqn.bean.EmptyOrNull" >
 		<property name="name">
 <!-- 			通过null标签注入null值 -->
 			<null></null>
 		</property>
 	</bean>
 	
+	<bean id="helloP" class="com.bdqn.bean.HelloP" p:id="3" p:name="张良">
+	</bean>
 	
+	<bean id="helloP2" class="com.bdqn.bean.HelloP" c:id="6" c:name="罗成">
+	
+	</bean>
+	
+	 <bean id="fight" class="com.bdqn.bean.CNMan">
+	 	<constructor-arg ref="request"></constructor-arg>
+	 </bean>
+	 <bean id="request" class="com.bdqn.bean.BabyRequest">
+	 </bean>
+	 <bean id="aopBean" class="com.bdqn.bean.AopBean">
+	 </bean>
+	 
+	 <bean id="initAndDestroy" class="com.bdqn.bean.InitAndDesctroy"
+	 	init-method="init" destroy-method="destroy"  
+	 >
+	 </bean>
+	 <aop:config>
+	 	<aop:aspect ref="aopBean">
+	 		<aop:pointcut expression="execution(* com.bdqn.*.*(..))" id="helloAop"/>
+	 		<aop:before method="before" pointcut-ref="helloAop"/>
+			<aop:after method="after" pointcut-ref="helloAop"/>
+	 	</aop:aspect>
+	 	
+	 	
+	 </aop:config>
 </beans>

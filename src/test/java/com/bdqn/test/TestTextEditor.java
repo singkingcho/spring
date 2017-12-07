@@ -17,5 +17,6 @@ public class TestTextEditor {
 		TextEditor te = (TextEditor) ctx.getBean("textEditor");
 		// in checking............
 		te.spellCheck();
+//		System.out.println(te);
 	}
 }
