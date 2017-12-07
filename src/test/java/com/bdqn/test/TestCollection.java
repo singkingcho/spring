@@ -7,11 +7,13 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.bdqn.bean.Girl;
 import com.bdqn.bean.MyCollection;
+import com.bdqn.collection.Author;
 
 public class TestCollection {
 
@@ -46,5 +48,16 @@ public class TestCollection {
 			System.out.println(properties.get(e));
 		}
 	 
+	}
+	
+	@Test
+	public void m1() {
+		
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("beans2.xml");
+		Author a = (Author) ctx.getBean("author");
+		System.out.println(a.getBlogs());
+		
+		 
+		
 	}
 }

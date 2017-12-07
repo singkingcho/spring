@@ -13,6 +13,7 @@
 	
 <!-- 	如果要启用注解，加入上下文的约束，下面这一行将启用注解 -->
 	<context:annotation-config></context:annotation-config>
+	<context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
 <!--	书写bean
 	id:为bean作一个唯一标记
@@ -112,6 +113,14 @@
 	 <bean id="initAndDestroy" class="com.bdqn.bean.InitAndDesctroy"
 	 	init-method="init" destroy-method="destroy"  
 	 >
+	 </bean>
+	 
+<!--	 数据源的配置-->
+	 <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	 	<property name="user" value="${user}"></property>
+	 	<property name="password" value="${password}"></property>
+	 	<property name="driverClass" value="${driverClass}"></property>
+	 	<property name="jdbcUrl" value="${jdbcUrl}"></property>
 	 </bean>
 	 <aop:config>
 	 	<aop:aspect ref="aopBean">
